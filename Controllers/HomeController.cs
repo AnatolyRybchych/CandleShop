@@ -7,17 +7,15 @@ namespace CandleShop.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly DatabaseConnectionManager dbConnectionMagager;
+    private readonly ISQLConnectionService SQLconection;
 
-    public HomeController(DatabaseConnectionManager dbConnectionMagager)
+    public HomeController(ISQLConnectionService SQLConnection)
     {
-        this.dbConnectionMagager = dbConnectionMagager;
+        this.SQLconection = SQLConnection;
     }
 
     public IActionResult Index()
     {   
-
-
         var model = new HomeModel();
         model.InitViewBag(ViewBag);
 

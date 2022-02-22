@@ -10,8 +10,9 @@ namespace CandleShop
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddSingleton<DatabaseConnectionManager>(
-                new DatabaseConnectionManager(builder.Configuration.GetConnectionString("CandleDatabase")));
+            builder.Services.AddTransient<ISQLConnectionService, MSSQL>((provider)=> 
+                new MSSQL(builder.Configuration.GetConnectionString("CandleDatabase"))
+                );
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
