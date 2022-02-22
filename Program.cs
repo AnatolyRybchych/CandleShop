@@ -10,7 +10,7 @@ namespace CandleShop
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddTransient<ISQLConnectionService, MSSQL>((provider)=> 
+            builder.Services.AddScoped<ISQLConnectionService, MSSQL>((provider)=> 
                 new MSSQL(builder.Configuration.GetConnectionString("CandleDatabase"))
                 );
             var app = builder.Build();
