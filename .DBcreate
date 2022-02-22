@@ -1,0 +1,7 @@
+#!/bin/bash
+#it`s for local database (for debug)
+
+sqlcmd -S localhost -U "SA" -P "Tolik7zzz" -i ./.Database/createDB_createUser.sql
+sqlcmd -S localhost -U "SA" -P "Tolik7zzz" -i ./.Database/makeUserAsAdmin.sql
+
+sqlcmd -S localhost -U "SA" -P "Tolik7zzz" -i ./.Database/layout.sql
