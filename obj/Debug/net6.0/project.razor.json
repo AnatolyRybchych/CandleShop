@@ -16298,8 +16298,8 @@
   "RootNamespace": "CandleShop",
   "Documents": [
     {
-      "FilePath": "/home/anatoly/Desktop/CandleShop/Views/Home/Shared/_Layout.cshtml",
-      "TargetPath": "Views\\Home\\Shared\\_Layout.cshtml",
+      "FilePath": "/home/anatoly/Desktop/CandleShop/Views/Shared/_Layout.cshtml",
+      "TargetPath": "Views\\Shared\\_Layout.cshtml",
       "FileKind": "mvc"
     },
     {

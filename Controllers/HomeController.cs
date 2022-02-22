@@ -1,16 +1,17 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using CandleShop.Models;
+using CandleShop.Models.Shared;
 
 namespace CandleShop.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly DatabaseConnectionManager dbConnectionMagager;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(DatabaseConnectionManager dbConnectionMagager)
     {
-        _logger = logger;
+        this.dbConnectionMagager = dbConnectionMagager;
     }
 
     public IActionResult Index()
