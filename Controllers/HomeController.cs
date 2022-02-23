@@ -15,7 +15,7 @@ public class HomeController : Controller
     }
 
     public IActionResult Index()
-    {   
+    {           
         var model = new HomeModel();
         model.InitViewBag(ViewBag);
 
