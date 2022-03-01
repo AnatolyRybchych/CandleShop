@@ -5,31 +5,65 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@(ViewBag.Title)</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Styles/_Layout.css">
+    @if (IsSectionDefined("Link"))
+    {
+        @RenderSection("Link")
+    }
+    <script src="Script/_Layout.js"></script>
 </head>
-    <header>
-        @if (IsSectionDefined("Header"))
-        {
-            @RenderSection("Header")
-        }
-        else
-        {
-            <span>Хедер за замовчуванням</span>
-        }
+<body>
+    @if (IsSectionDefined("Header"))
+    {
+        @RenderSection("Header")
+    }
+    else
+    {
+    <header class="header">
+        <div class="header_content">
+            <div class="header_logo">
+                logo
+            </div>
+            <div class="empty"></div>
+            <div class="header_categories">
+                <div class="header_category">
+                    Home
+                </div>
+                <div class="header_category">
+                    About
+                </div>
+                <div class="header_category">
+                    Shop
+                </div>
+                <div class="header_category">
+                    Shop
+                </div>
+            </div>
+            <div class="header_right">
+                account
+            </div>
+        </div>
     </header>
+    }
 
 
     @RenderBody()
     
 
-    <footer>
-        @if (IsSectionDefined("Footer"))
-        {
-            @RenderSection("Footer")
-        }
-        else
-        {
-            <span>Футер за замовчуванням</span>
-        }
+    @if (IsSectionDefined("Footer"))
+    {
+        @RenderSection("Footer")
+    }
+    else
+    {
+    <footer id="footer" class="footer">
+        candle shop
     </footer>
+    }
+</body>
 </html>
 
