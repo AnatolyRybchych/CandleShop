@@ -10,16 +10,13 @@ html{
     background-color: #050000;
 }
 
-div{
-    display: flex;
-}
-
 
 header.header{
     padding: 2%;
 }
 
 .header_content{
+    display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
@@ -29,6 +26,7 @@ header.header{
 }
 
 .header_categories{
+    display: flex;
     justify-content: left;
 }
 
