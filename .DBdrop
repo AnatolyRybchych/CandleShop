@@ -1,0 +1,4 @@
+#!/bin/bash
+#it`s for local database (for debug)
+
+sqlcmd -S localhost -U "SA" -P "Tolik7zzz" -i ./.Database/drop.sql
