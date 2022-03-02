@@ -2,9 +2,9 @@ using CandleShop.Models.Shared;
 
 namespace CandleShop.Models.Shared.Database
 {
-    public class LayoutHeader : IDatabaseTable
+    public class LayoutHeader : DatabaseTable
     {
-        public string TableName => "LayoutHeader";
+        public override string TableName => "LayoutHeader";
 
         [DatabaseClolumn("Id", DatabaseClolumnAttribute.DBColAttribs.Select, System.Data.SqlDbType.Int)]
         public int Id{ get; set; }

@@ -17,8 +17,10 @@ class DatabaseClolumnAttribute : System.Attribute
         Attribs = attribs;
     }
 
+    [Flags]
     public enum DBColAttribs
     {
+        None = 0,
         Select = 1,
         Insert = 2,
         All = Select | Insert,
