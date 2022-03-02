@@ -7,7 +7,57 @@ public abstract class DatabaseTable
 {
     public abstract string TableName{ get; }
 
-    public void SelectFirstOrError(SqlConnection con, string variadic = "WHERE 1=1")
+    public static List<T> Select<T>(SqlConnection con, string condition = "WHERE 1=1") where T:DatabaseTable, new()
+    {
+        List<T> res = new List<T>();
+
+        var instance = new T();
+
+        var TabType = typeof(T);
+
+        var properties = TabType.GetProperties();
+
+        var toSelect = properties
+            .Where(prop => Attribute.IsDefined(prop, typeof(DatabaseClolumnAttribute)))
+            .Select(prop => new {
+                row = (DatabaseClolumnAttribute)prop.GetCustomAttributes(typeof(DatabaseClolumnAttribute), false).First(),
+                propInfo = prop})
+            .Where(prop => (prop.row.Attribs & DatabaseClolumnAttribute.DBColAttribs.Select) != DatabaseClolumnAttribute.DBColAttribs.None);
+
+        string query = $"SELECT TOP 1 {string.Join(',', toSelect.Select(prop => $"[{prop.row.Name}]"))} "
+        + $"FROM [{instance.TableName}] {condition};"; 
+
+        var cmd = con.CreateCommand();
+        cmd.CommandText = query;
+
+        try
+        {
+            var reader = cmd.ExecuteReader();
+            while(reader.Read())
+            {
+                foreach (var prop in toSelect)
+                {
+                    var row = new T();
+                    prop.propInfo.SetValue(instance.TableName, reader[prop.row.Name]);
+                    res.Add(row);
+                }
+            }
+            //cleanup
+            reader?.Close();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+        finally
+        {
+            cmd.Dispose();
+        }
+
+        return res;
+    }
+
+    public void SelectFirstOrError(SqlConnection con, string condition = "WHERE 1=1")
     {
         var TabType = this.GetType();
 
@@ -21,26 +71,40 @@ public abstract class DatabaseTable
             .Where(prop => (prop.row.Attribs & DatabaseClolumnAttribute.DBColAttribs.Select) != DatabaseClolumnAttribute.DBColAttribs.None);
 
         string query = $"SELECT TOP 1 {string.Join(',', toSelect.Select(prop => $"[{prop.row.Name}]"))} "
-        + $"FROM [{this.TableName}] {variadic};"; 
+        + $"FROM [{this.TableName}] {condition};"; 
 
+        var fail = false;
         var cmd = con.CreateCommand();
         cmd.CommandText = query;
-        
-        var reader = cmd.ExecuteReader();
-        if(reader.Read())
+
+        try
         {
-            foreach (var prop in toSelect)
+            var reader = cmd.ExecuteReader();
+            if(reader.Read())
             {
-                prop.propInfo.SetValue(this, reader[prop.row.Name]);
+                foreach (var prop in toSelect)
+                {
+                    prop.propInfo.SetValue(this, reader[prop.row.Name]);
+                }
             }
-            reader.Close();
-            cmd.Dispose();
-            return;
+            else
+            {
+                fail = true;
+            }
+            //cleanup
+            reader?.Close();
         }
-        else
+        catch (Exception)
         {
-            reader.Close();
+            throw;
+        }
+        finally
+        {
             cmd.Dispose();
+        }
+        
+        if(fail)
+        {
             throw new Exception($"Cannot read table [{this.TableName}]");
         }
     }
