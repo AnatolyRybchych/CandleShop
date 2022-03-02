@@ -9,19 +9,13 @@ namespace CandleShop.Models.Shared.Database
         [DatabaseClolumn("Id", DatabaseClolumnAttribute.DBColAttribs.Select, System.Data.SqlDbType.Int)]
         public int Id{ get; set; }
 
-        [DatabaseClolumn("Region", DatabaseClolumnAttribute.DBColAttribs.All, System.Data.SqlDbType.VarChar)]
-        public string? Region{ get; set; }
-
-        [DatabaseClolumn("Short", DatabaseClolumnAttribute.DBColAttribs.All, System.Data.SqlDbType.VarChar)]
-        public string? Short{ get; set; }
-
-        [DatabaseClolumn("Home", DatabaseClolumnAttribute.DBColAttribs.All, System.Data.SqlDbType.VarChar)]
+        [DatabaseClolumn("Home", DatabaseClolumnAttribute.DBColAttribs.All, System.Data.SqlDbType.NVarChar)]
         public string? Home{ get; set; }
 
-        [DatabaseClolumn("About", DatabaseClolumnAttribute.DBColAttribs.All, System.Data.SqlDbType.VarChar)]
+        [DatabaseClolumn("About", DatabaseClolumnAttribute.DBColAttribs.All, System.Data.SqlDbType.NVarChar)]
         public string? About{ get; set; }
 
-        [DatabaseClolumn("Shop", DatabaseClolumnAttribute.DBColAttribs.All, System.Data.SqlDbType.VarChar)]
+        [DatabaseClolumn("Shop", DatabaseClolumnAttribute.DBColAttribs.All, System.Data.SqlDbType.NVarChar)]
         public string? Shop{ get; set; }
     }
 }

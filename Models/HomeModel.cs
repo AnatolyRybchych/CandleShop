@@ -1,3 +1,4 @@
+using System.Data.SqlClient;
 using CandleShop;
 using CandleShop.Models;
 using CandleShop.Models.Shared;
@@ -6,9 +7,10 @@ namespace CandleShop.Models
 {
     public class HomeModel:Page
     {
-        public HomeModel()
+        public HomeModel(SqlConnection con):base(con)
         {
-            Title = "Candle shop";
         }
+
+        public override string Title => "Candle shop";
     }
 }

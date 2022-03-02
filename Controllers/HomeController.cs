@@ -8,23 +8,15 @@ namespace CandleShop.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ISQLConnectionService SQLconection;
+    private readonly HomeModel model;
 
-    public HomeController(ISQLConnectionService SQLConnection)
+    public HomeController(HomeModel model)
     {
-        this.SQLconection = SQLConnection;
+        this.model = model;
     }
 
     public IActionResult Index()
     {       
-        LayoutHeader header = new LayoutHeader();
-        header.SelectFirstOrError(SQLconection.connection, "WHERE Short='UA'");
-
-        var model = new HomeModel();
-        model.Header.Home = header.Home;
-        model.Header.Shop = header.Shop;
-        model.Header.About = header.About;
-
         model.InitViewBag(ViewBag);
 
         return View(model);

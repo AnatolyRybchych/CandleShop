@@ -1,3 +1,4 @@
+using CandleShop.Models;
 using CandleShop.Models.Shared;
 
 namespace CandleShop
@@ -13,6 +14,13 @@ namespace CandleShop
             builder.Services.AddScoped<ISQLConnectionService, MSSQL>((provider)=> 
                 new MSSQL(builder.Configuration.GetConnectionString("CandleDatabase"))
                 );
+            builder.Services.AddScoped<HomeModel>((provider)=> 
+            {
+                var connectionService = provider.GetService<ISQLConnectionService>();
+                if(connectionService == null) throw new Exception("Not implemented service error");
+                else return new HomeModel(connectionService.connection);
+            }
+            );
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
