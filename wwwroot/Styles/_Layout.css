@@ -2,6 +2,7 @@
     box-sizing: border-box;
     padding: 0px;
     margin: 0px;
+    border: 0px;
     font-size: 24px;
     color: wheat;
 }
@@ -41,6 +42,12 @@ header.header{
     text-transform: uppercase;
     cursor: pointer;
     font-family: 'IBM Plex Mono', monospace;
+}
+
+
+.ViewPanel{
+    background: #050000cc;
+    box-shadow: 0px 0px 8px 8px #050000cc;
 }
 
 
