@@ -15,6 +15,11 @@ header.header{
     padding: 2%;
 }
 
+.main_logo, 
+.header_logo{
+    height: 80px;
+}
+
 .header_content{
     display: flex;
     justify-content: space-between;
