@@ -16,13 +16,11 @@ namespace CandleShop
             builder.Services.AddScoped<IDbConnection>((provider)=>
                 new SqlConnection(builder.Configuration.GetConnectionString("CandleDatabase"))
                 );
-            builder.Services.AddScoped<HomeModel>((provider)=> 
-            {
-                var con = provider.GetService<IDbConnection>();
-                if(con == null) throw new Exception("there are no IDbConnection service");
-                else return new HomeModel(con);
-            }
-            );
+
+            builder.Services.AddHomeModelService();
+            builder.Services.AddAboutModelService();
+            builder.Services.AddShopModelService();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
