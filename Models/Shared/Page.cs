@@ -6,7 +6,6 @@ namespace CandleShop.Models.Shared
 {
     public abstract class Page
     {
-        //connection should be opened
         public Page(IDbConnection con)
         {
             con.Open();
