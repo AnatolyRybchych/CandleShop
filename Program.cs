@@ -1,3 +1,5 @@
+using System.Data;
+using System.Data.SqlClient;
 using CandleShop.Models;
 using CandleShop.Models.Shared;
 
@@ -11,14 +13,14 @@ namespace CandleShop
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<ISQLConnectionService, MSSQL>((provider)=> 
-                new MSSQL(builder.Configuration.GetConnectionString("CandleDatabase"))
+            builder.Services.AddScoped<IDbConnection>((provider)=>
+                new SqlConnection(builder.Configuration.GetConnectionString("CandleDatabase"))
                 );
             builder.Services.AddScoped<HomeModel>((provider)=> 
             {
-                var connectionService = provider.GetService<ISQLConnectionService>();
-                if(connectionService == null) throw new Exception("Not implemented service error");
-                else return new HomeModel(connectionService.connection);
+                var con = provider.GetService<IDbConnection>();
+                if(con == null) throw new Exception("there are no IDbConnection service");
+                else return new HomeModel(con);
             }
             );
             var app = builder.Build();

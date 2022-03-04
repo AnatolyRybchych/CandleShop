@@ -5,10 +5,27 @@
     border: 0px;
     font-size: 24px;
     color: wheat;
+    text-decoration: none;
 }
 
 html{
     background-color: #050000;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #050000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #794210;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff7a00;
 }
 
 
@@ -37,11 +54,12 @@ header.header{
 }
 
 .header_category{
-    color: gold;
+    color: #ff7a00;
     margin: 0px 20px;
     text-transform: uppercase;
     cursor: pointer;
     font-family: 'IBM Plex Mono', monospace;
+    font-weight: 400;
 }
 
 

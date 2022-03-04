@@ -22,7 +22,7 @@ var FooterBehavivor = /** @class */ (function () {
         console.log(this.Body.offsetHeight);
         console.log(window.innerHeight);
         this.KeepBottomPosHandle();
-        this.Body.addEventListener('resize', function (ev) {
+        this.Window.addEventListener('resize', function (ev) {
             _this.KeepBottomPosHandle();
         });
     };

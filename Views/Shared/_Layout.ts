@@ -39,7 +39,7 @@ class FooterBehavivor{
         console.log(window.innerHeight);
 
         this.KeepBottomPosHandle();
-        this.Body.addEventListener('resize', (ev:Event) =>{
+        this.Window.addEventListener('resize', (ev:Event) =>{
             this.KeepBottomPosHandle();
         });
     }

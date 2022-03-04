@@ -1,6 +1,29 @@
 #head_img{
     width: 100%;
-    position: absolute;
+    position: relative;
     top: 0px;
     z-index: -1;
+}
+
+.new{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    margin-bottom: 50px;
+}
+
+.title_container{
+    display: flex;
+    justify-content: center;
+    margin: 2.5%;
+}
+
+.data{
+    display: flex;
+    justify-content: space-around;
+}
+
+.item{
+    width: 250px;
+    height: 250px;
 }

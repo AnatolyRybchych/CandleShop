@@ -5,10 +5,10 @@ WEB_ROOT_SCRIPTS	:= $(WEB_ROOT)/Script
 
 
 SHARED_DIR	:= Views/Shared
-_LAYOYT_SCRIPT	:= $(WEB_ROOT_SCRIPTS)/_Layout.js
-_LAYOYT_TS	:= $(SHARED_DIR)/_Layout.ts
+_LAYOUT_SCRIPT	:= $(WEB_ROOT_SCRIPTS)/_Layout.js
+_LAYOUT_TS	:= $(SHARED_DIR)/_Layout.ts
 
-$(_LAYOYT_SCRIPT): $(_LAYOYT_TS)
+$(_LAYOUT_SCRIPT): $(_LAYOUT_TS)
 	@echo "$@ : $^"
 	@tsc $^ --outFile $@
 
@@ -23,7 +23,7 @@ $(HOME_SCRIPT): $(HOME_TS)
 
 
 
-all: $(HOME_SCRIPT) $(_LAYOYT_SCRIPT)
+all: $(HOME_SCRIPT) $(_LAYOUT_SCRIPT)
 	@echo "$@ : $^"
 
 run: all

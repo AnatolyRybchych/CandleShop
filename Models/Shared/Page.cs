@@ -1,24 +1,35 @@
 
+using System.Data;
 using System.Data.SqlClient;
-using CandleShop.Models.Shared.Database;
 
 namespace CandleShop.Models.Shared
 {
     public abstract class Page
     {
-        public Page(SqlConnection con)
+        //connection should be opened
+        public Page(IDbConnection con)
         {
+            con.Open();
+            
             Header = new Header();
             InitHeader(con);
-        }
-        private void InitHeader(SqlConnection con)
-        {
-            var Hdr = new LayoutHeader();
-            Hdr.SelectFirstOrError(con);
 
-            Header.Home = Hdr.Home;
-            Header.Shop = Hdr.Shop;
-            Header.About = Hdr.About;
+            con.Close();
+        }
+        private void InitHeader(IDbConnection con)
+        {
+            var cmd = con.CreateCommand();
+            cmd.CommandText = $"SELECT [Home], [Shop], [About] FROM LayoutHeader WHERE Id = 1;";
+            var reader = cmd.ExecuteReader();
+            
+            if(reader.Read())
+            {
+                Header.Home = (string)reader["Home"];
+                Header.Shop = (string)reader["Shop"];
+                Header.About = (string)reader["About"];
+            }
+            
+            reader.Close();
         }
         public Header Header{get; protected set;}
         public abstract string Title { get; }

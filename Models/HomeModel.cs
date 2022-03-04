@@ -1,3 +1,4 @@
+using System.Data;
 using System.Data.SqlClient;
 using CandleShop;
 using CandleShop.Models;
@@ -7,7 +8,7 @@ namespace CandleShop.Models
 {
     public class HomeModel:Page
     {
-        public HomeModel(SqlConnection con):base(con)
+        public HomeModel(IDbConnection con):base(con)
         {
         }
 
