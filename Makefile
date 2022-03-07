@@ -8,9 +8,12 @@ SHARED_DIR	:= Views/Shared
 _LAYOUT_SCRIPT	:= $(WEB_ROOT_SCRIPTS)/_Layout.js
 _LAYOUT_TS	:= $(SHARED_DIR)/_Layout.ts
 
-$(_LAYOUT_SCRIPT): $(_LAYOUT_TS)
+
+all: $(HOME_SCRIPT) $(_LAYOUT_SCRIPT)
 	@echo "$@ : $^"
-	@tsc $^ --outFile $@
+
+$(_LAYOUT_SCRIPT): $(_LAYOUT_TS)
+	tsc $^ --outFile $@ -target es6 
 
 
 HOME_DIR	:= Views/Home
@@ -18,13 +21,5 @@ HOME_SCRIPT	:= $(WEB_ROOT_SCRIPTS)/Home.js
 HOME_TS	:= $(HOME_DIR)/Home.ts
 
 $(HOME_SCRIPT): $(HOME_TS)
-	@echo "$@ : $^"
-	@tsc $^ --outFile $@
+	tsc $^ --outFile $@ -target es6 
 
-
-
-all: $(HOME_SCRIPT) $(_LAYOUT_SCRIPT)
-	@echo "$@ : $^"
-
-run: all
-	@dotnet run
