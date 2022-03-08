@@ -23,7 +23,6 @@ class HomePageElements{
 class FooterBehavivor{
     private readonly Footer:HTMLElement;
     private readonly Body:HTMLBodyElement;
-    private readonly Window:HTMLElement;
 
     private readonly ElementBottomScreenClass:string = 'absolute_bottom';
 
@@ -31,7 +30,6 @@ class FooterBehavivor{
         this.Footer = footer;
 
         this.Body = <HTMLBodyElement>document.getElementsByTagName('body')[0];
-        this.Window = <HTMLElement>document.getElementsByTagName('window')[0];
     }
 
     public KeepBottomPos():void{
@@ -39,7 +37,7 @@ class FooterBehavivor{
         console.log(window.innerHeight);
 
         this.KeepBottomPosHandle();
-        this.Window.addEventListener('resize', (ev:Event) =>{
+        window.addEventListener('resize', (ev:Event) =>{
             this.KeepBottomPosHandle();
         });
     }

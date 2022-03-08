@@ -14,13 +14,12 @@ class FooterBehavivor {
         this.ElementBottomScreenClass = 'absolute_bottom';
         this.Footer = footer;
         this.Body = document.getElementsByTagName('body')[0];
-        this.Window = document.getElementsByTagName('window')[0];
     }
     KeepBottomPos() {
         console.log(this.Body.offsetHeight);
         console.log(window.innerHeight);
         this.KeepBottomPosHandle();
-        this.Window.addEventListener('resize', (ev) => {
+        window.addEventListener('resize', (ev) => {
             this.KeepBottomPosHandle();
         });
     }

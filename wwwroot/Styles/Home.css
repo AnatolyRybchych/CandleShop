@@ -3,12 +3,15 @@
     position: relative;
     top: 0px;
     z-index: -1;
+    display: flex;
+    
 }
 
 .candle_fire{
 }
 
-.candle_fire_1{
+.candle_fire_1,
+.candle_fire_2{
     width: 200px;
     height: 200px;
 }
@@ -21,6 +24,11 @@
 
 .candle_body{
     position: relative;
+}
+
+.candle_body_2{
+    top: -40px;
+    width: 200px;
 }
 
 .candle_body_1{

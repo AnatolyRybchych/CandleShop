@@ -22,24 +22,26 @@ class Fire{
     private canvas:HTMLCanvasElement;
     private gl:WebGLRenderingContext;
 
-    private static vert:WebGLShader;
-    private static frag:WebGLShader;
-    private static prog:WebGLProgram;
+    private vert:WebGLShader;
+    private frag:WebGLShader;
+    private prog:WebGLProgram;
 
-    private static buffer:WebGLBuffer;
+    private buffer:WebGLBuffer;
 
-    private static Attribute_VertPos;
-    private static Uniform_time;
+    private Attribute_VertPos;
+    private Uniform_time;
+    private phase:number;
 
     constructor(canvas:HTMLCanvasElement) {
         this.canvas = canvas;
         this.gl = canvas.getContext("webgl");
 
-        Fire.InitShaders(this.gl);
-        Fire.InitBuffers(this.gl);
+        this.InitShaders(this.gl);
+        this.InitBuffers(this.gl);
 
         this.gl.enable(this.gl.BLEND);
         this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
+        this.phase = Math.random() * 100;
         
 
     }
@@ -47,26 +49,26 @@ class Fire{
     public Draw():void{
         this.gl.clearColor(0.019,0,0,1);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-        this.gl.useProgram(Fire.prog);
+        this.gl.useProgram(this.prog);
         var now:Date = new Date();
         var time:number = now.getMinutes() * 60 + now.getSeconds() + now.getMilliseconds()/1000;
 
-        this.gl.uniform1f(Fire.Uniform_time, time);
+        this.gl.uniform1f(this.Uniform_time, time + this.phase);
 
-        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, Fire.buffer);
-        this.gl.enableVertexAttribArray(Fire.Attribute_VertPos);
-        this.gl.vertexAttribPointer(Fire.Attribute_VertPos, 2, this.gl.FLOAT, false, 0, 0);
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.buffer);
+        this.gl.enableVertexAttribArray(this.Attribute_VertPos);
+        this.gl.vertexAttribPointer(this.Attribute_VertPos, 2, this.gl.FLOAT, false, 0, 0);
 
         this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
 
 
     }
 
-    private static InitBuffers(gl:WebGLRenderingContext):void{
-        if(Fire.buffer == undefined){
-            Fire.buffer = gl.createBuffer();
+    private InitBuffers(gl:WebGLRenderingContext):void{
+        if(this.buffer == undefined){
+            this.buffer = gl.createBuffer();
 
-            gl.bindBuffer(gl.ARRAY_BUFFER, Fire.buffer);
+            gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
 
             var data:Float32Array = new Float32Array(
                 [
@@ -82,54 +84,54 @@ class Fire{
         }
     }
 
-    private static InitShaders(gl:WebGLRenderingContext):void{
-        if(Fire.vert == undefined){
-            Fire.vert = gl.createShader(gl.VERTEX_SHADER);
-            gl.shaderSource(Fire.vert, Fire.vert_source);
-            gl.compileShader(Fire.vert);
+    private InitShaders(gl:WebGLRenderingContext):void{
+        if(this.vert == undefined){
+            this.vert = gl.createShader(gl.VERTEX_SHADER);
+            gl.shaderSource(this.vert, Fire.vert_source);
+            gl.compileShader(this.vert);
 
-            if(!gl.getShaderParameter(Fire.vert, gl.COMPILE_STATUS)){
-                console.log("Vrtex shader:\n" + gl.getShaderInfoLog(Fire.vert));
+            if(!gl.getShaderParameter(this.vert, gl.COMPILE_STATUS)){
+                console.log("Vrtex shader:\n" + gl.getShaderInfoLog(this.vert));
 
-                Fire.vert = undefined;
+                this.vert = undefined;
             }
         }
         
-        if(Fire.frag == undefined){
-            Fire.frag = gl.createShader(gl.FRAGMENT_SHADER);
-            gl.shaderSource(Fire.frag, Fire.frag_source);
-            gl.compileShader(Fire.frag);
+        if(this.frag == undefined){
+            this.frag = gl.createShader(gl.FRAGMENT_SHADER);
+            gl.shaderSource(this.frag, Fire.frag_source);
+            gl.compileShader(this.frag);
 
-            if(!gl.getShaderParameter(Fire.frag, gl.COMPILE_STATUS)){
-                console.log("Fragment shader:\n" + gl.getShaderInfoLog(Fire.frag));
+            if(!gl.getShaderParameter(this.frag, gl.COMPILE_STATUS)){
+                console.log("Fragment shader:\n" + gl.getShaderInfoLog(this.frag));
 
-                Fire.frag = undefined;
+                this.frag = undefined;
             }
         }
 
-        if(Fire.prog == undefined){
-            if(Fire.vert == undefined){
+        if(this.prog == undefined){
+            if(this.vert == undefined){
                 console.log("Shader program:\nVertex shader is not not compiled");
             }
-            if(Fire.frag == undefined){
+            if(this.frag == undefined){
                 console.log("Shader program:\nFragment shader is not not compiled");
             }
-            if(Fire.vert == undefined || Fire.frag == undefined){
+            if(this.vert == undefined || this.frag == undefined){
                 return;
             }
 
-            Fire.prog = gl.createProgram();
-            gl.attachShader(Fire.prog, Fire.vert);
-            gl.attachShader(Fire.prog, Fire.frag);
-            gl.linkProgram(Fire.prog);
+            this.prog = gl.createProgram();
+            gl.attachShader(this.prog, this.vert);
+            gl.attachShader(this.prog, this.frag);
+            gl.linkProgram(this.prog);
 
-            if(!gl.getProgramParameter(Fire.prog, gl.LINK_STATUS)){
-                console.log("Shader program:\n" + gl.getProgramInfoLog(Fire.prog));
+            if(!gl.getProgramParameter(this.prog, gl.LINK_STATUS)){
+                console.log("Shader program:\n" + gl.getProgramInfoLog(this.prog));
 
-                Fire.prog = undefined;
+                this.prog = undefined;
             }
-            Fire.Attribute_VertPos = gl.getAttribLocation(Fire.prog, "VertPos");
-            Fire.Uniform_time = gl.getUniformLocation(Fire.prog, "time");
+            this.Attribute_VertPos = gl.getAttribLocation(this.prog, "VertPos");
+            this.Uniform_time = gl.getUniformLocation(this.prog, "time");
         }
     }
 
